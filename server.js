@@ -20,7 +20,11 @@ app.get('/', function (req, res) {
 });
 
 app.get(/^\/new\/(.*)$/, function (req, res) {
-  var raw = req.params[0];
+  var raw = URL.validate(req.params[0]);
+  if (raw === false) {
+    res.status(400).json({error: "URL invalid"});
+    return;
+  }
   function sendResult (result) {
     res.json({raw: result.raw, shortened: "https://" + req.hostname + "/" + result.shortCode});
   }

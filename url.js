@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var validate = require('url-validator');
 
 var urlSchema = mongoose.Schema({
   raw: String,
@@ -31,6 +32,8 @@ urlSchema.statics.genCode = function (cb) {
   }
   tryCode();
 };
+
+urlSchema.statics.validate = validate;
 
 var URL = mongoose.model('URL', urlSchema);
 
